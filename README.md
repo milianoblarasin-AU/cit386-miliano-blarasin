@@ -16,7 +16,3 @@ This repository contains my coursework for CIT 386 and follows the development o
 - `module07` — Module 7 cloud networking coursework and supporting files.
 - `module08` — Module 8 cloud networking coursework and supporting files.
 - `capstone` — Final course project combining the term's cloud network design work.
-
-## AI assistance disclosure
-
-OpenAI Codex was used to help organize the repository, draft and edit the README and deployment comparison, and create the placeholder files and Git commits. I reviewed the business scenario, workload requirements, five deployment verdicts, and recommendation for accuracy and remain responsible for the submitted analysis.
