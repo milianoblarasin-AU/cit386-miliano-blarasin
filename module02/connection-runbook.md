@@ -63,3 +63,30 @@ The exact server name may differ. Success is the prompt ending in `$` with the c
 ## 5. Validation performed
 
 On September 27, 2026, I converted `VM01_key.pem` to `VM01_key.ppk`, confirmed TCP port 22 was reachable, encountered the expected uncached-host-key condition, and authenticated with PuTTY's SSH engine using the configured username and `.ppk` file. A remote test command completed with exit code 0. No key contents, fingerprints, or live public IP were copied into this repository.
+
+## 6. Troubleshooting by exact message
+
+Start with the first check in the table. Change one item at a time, then reconnect.
+
+| Exact message | What it means | First thing to check |
+|---|---|---|
+| **`Network error: Connection timed out`** | PuTTY sent connection attempts but received no response before the timeout. Common causes are an old public IP, a stopped VM, or a network-security rule that does not allow SSH from the current network. | Compare **Host Name (or IP address)** with the current value in the private course shell. Correct and resave it if it changed. |
+| **`Network error: Connection refused`** | The address answered, but no service accepted the connection on the selected port. | Return to **Session** and verify **Port** is `22` and **SSH** is selected. If both are correct, the server's SSH service or Azure network rule needs instructor attention. |
+| **`Host does not exist`** | PuTTY could not interpret or resolve the value in the host-name box. | Make sure **Host Name (or IP address)** contains only the supplied address—no `https://`, `azureuser@`, slash, comma, or trailing space. |
+| **`Unable to use key file`** | PuTTY could not open the selected file or it is not in a usable PuTTY private-key format. | Under **Connection → SSH → Auth → Credentials**, confirm the selected filename ends in `.ppk`. If only the `.pem` exists, repeat Section 2. |
+| **`No supported authentication methods available (server sent: publickey)`** | The server requires a public-key login, but PuTTY did not offer a usable matching private key. | Confirm **Private key file for authentication** points to `VM01_key.ppk`, not `VM01_key.pub` or `VM01_key.pem`. |
+| **`Server refused our key`** | PuTTY offered a key, but the server did not accept its matching public key for this account. | Check **Connection → Data → Auto-login username** is exactly `azureuser`, then verify that the `.ppk` was converted from the key issued for this VM. |
+| **`Access denied`** | Authentication failed after a login attempt. This usually means the username is wrong, the wrong key pair is selected, or a password was entered even though the server expects a key. | Load `CIT386-VM01`, recheck the username, and browse to the correct `VM01_key.ppk`; do not guess a password. |
+
+If these first checks do not resolve the problem, stop changing settings and send the instructor the exact error message, the time of the attempt, and which first check was completed. Do not send any key file, key text, fingerprint, or screenshot containing them.
+
+## 7. Clear-setup retest
+
+To verify that the runbook is complete:
+
+1. Close the SSH terminal and PuTTY.
+2. Reopen PuTTY, select `CIT386-VM01` under **Saved Sessions**, and click **Delete**.
+3. Confirm the session name disappears.
+4. Begin again at Section 1 using only this document and the private course-shell connection note.
+5. Recreate and save the session, connect, and confirm the Linux `$` prompt appears.
+6. Add any missing click, filename, or field to this runbook immediately rather than relying on memory.
