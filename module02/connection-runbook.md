@@ -90,3 +90,19 @@ To verify that the runbook is complete:
 4. Begin again at Section 1 using only this document and the private course-shell connection note.
 5. Recreate and save the session, connect, and confirm the Linux `$` prompt appears.
 6. Add any missing click, filename, or field to this runbook immediately rather than relying on memory.
+
+## 8. Key handling and exposure response
+
+- **May be copied:** `VM01_key.pub` is the public key. It may be copied to a server administrator or another machine that needs to authorize this key. It cannot be used by itself to log in.
+- **Must remain secret:** `VM01_key.pem` and `VM01_key.ppk` are two formats of the same private key. Do not email, message, upload, photograph, or commit either file. Do not copy them to another machine for this assignment. Store them only in the protected `Documents\CIT386\keys` folder on the trusted course computer.
+- **Screenshots:** Before saving or posting a screenshot, check that it does not show key text, a fingerprint, the live public IP, or the contents of the key folder. Screenshots may support this runbook but do not replace its written steps.
+
+If either private file is exposed, assume the key is compromised even if the file is later deleted:
+
+1. Stop using the exposed `.pem` and `.ppk` files.
+2. Notify the instructor or server administrator immediately and identify the affected VM account without sending the key.
+3. Remove the matching public key from the server's `authorized_keys` file, or have the administrator remove it.
+4. Generate or obtain a new key pair and install the new public key on the server.
+5. Convert the new private key to a new `.ppk`, update the saved PuTTY session, and securely delete all exposed private-key copies.
+
+Deleting the leaked local file alone is not enough: anyone who copied it could continue using it until the matching public key is revoked on the server.
