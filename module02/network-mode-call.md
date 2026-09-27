@@ -1,0 +1,4 @@
+# Network Mode Call
+
+I would set the guest to **Bridged Adapter** mode because it must be reachable from another computer on the same physical network without adding a port-forwarding rule or other special configuration on the host. Bridging places the guest directly on that LAN with its own network identity and address, so the computer in the other room can connect to the guest as it would to another physical machine. I rejected the default **NAT** mode because NAT permits normal outbound connections but does not make unsolicited inbound connections to the guest reachable without configuring port forwarding on the host, which violates the requirement. The cost of bridged mode is reduced isolation: the guest is exposed to the same local network as the host, uses an address on that network, and must be secured like a separate physical computer; some managed or wireless networks may also refuse an additional guest device.
+
